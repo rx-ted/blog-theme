@@ -6,6 +6,9 @@
   "scripts": {
     "build": "vue-tsc"
   },
+  "publishConfig": {
+    "@rx-ted:registry": "https://npm.pkg.github.com"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rx-ted/blog-theme.git"
