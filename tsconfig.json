@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "types": [
+      "vite/client"
+    ],
+    "jsx": "preserve",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@rx-ted/blog/theme": [
+        "./theme"
+      ],
+      "@rx-ted/blog": [
+        "src/index.ts"
+      ]
+    },
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src",
+    "types",
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "theme.d.ts"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "name": "@rx-ted/theme",
+  "version": "1.0.0",
+  "description": "blog theme",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "vue-tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rx-ted/blog-theme.git"
+  },
+  "keywords": [
+    "blog",
+    "theme",
+    "vitepress",
+    "vue",
+    "typescript"
+  ],
+  "author": "rx-ted",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rx-ted/blog-theme/issues"
+  },
+  "homepage": "https://github.com/rx-ted/blog-theme#readme",
+  "devDependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@giscus/vue": "^3.0.0",
+    "@mdit-vue/shared": "^2.1.3",
+    "@types/cross-spawn": "^6.0.6",
+    "artalk": "^2.8.7",
+    "cross-spawn": "^7.0.3",
+    "element-plus": "^2.8.1",
+    "fast-glob": "^3.3.2",
+    "gray-matter": "^4.0.3",
+    "oh-my-live2d": "^0.19.3",
+    "p-limit": "^6.1.0",
+    "sass": "^1.77.8",
+    "swiper": "^11.1.12",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4",
+    "vitepress": "^1.3.4",
+    "vitepress-markdown-timeline": "^1.2.1",
+    "vitepress-plugin-pagefind": "^0.4.10",
+    "vitepress-plugin-rss": "^0.2.10",
+    "vitepress-plugin-tabs": "^0.5.0",
+    "vue": "^3.4.38",
+    "vue-tsc": "^2.1.4"
+  }
+}
