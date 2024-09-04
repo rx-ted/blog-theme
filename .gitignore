@@ -1,7 +1,5 @@
 node_modules
-dist
 cache
 .temp
-blog.tar.gz
 .DS_Store
 _pagefind
