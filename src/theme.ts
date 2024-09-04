@@ -2,7 +2,6 @@ import type { UserConfig } from 'vitepress'
 import type { Theme } from './composables/config/index'
 import {
   getMarkdownPlugins,
-  patchMermaidPluginCfg,
   patchOptimizeDeps,
   registerMdPlugins,
 } from './utils/node/mdPlugins'
@@ -36,10 +35,6 @@ export function getThemeConfig(cfg: Partial<Theme.BlogConfig> = {}) {
   // 注册markdown插件
   registerMdPlugins(extraVPConfig, markdownPlugin)
 
-  // patch extraVPConfig
-  if (cfg?.mermaid !== false) {
-    patchMermaidPluginCfg(extraVPConfig)
-  }
   patchOptimizeDeps(extraVPConfig)
 
   patchVPConfig(extraVPConfig, cfg)

@@ -18,7 +18,7 @@ const renderData = computed(() => {
       name: string
       link?: string
       icon?: string | boolean
-    } | string) [] = []
+    } | string)[] = []
     // message
     const messageData = [message || []].flat()
     const bottomMessageData = [bottomMessage || []].flat()
@@ -29,8 +29,8 @@ const renderData = computed(() => {
       const versionItem = typeof version === 'object' ? version : {}
 
       data.push({
-        name: versionItem?.name || `@sugarat/theme@${packageJSON.version}`,
-        link: versionItem?.link || 'https://theme.sugarat.top/',
+        name: versionItem?.name || `@rx-ted/theme@${packageJSON.version}`,
+        link: versionItem?.link || 'https://github.com/rx-ted/blog-theme',
         icon: versionItem?.icon || themeSVG
       })
     }
@@ -88,7 +88,7 @@ const renderData = computed(() => {
   <footer v-if="renderData.length" class="blog-footer">
     <!-- eslint-disable vue/require-v-for-key -->
     <!-- see https://cn.vuejs.org/guide/essentials/list.html#v-for-on-template -->
-    <template v-for="({ data, messageData, bottomMessageData }) in renderData">
+    <template v-for="{ data, messageData, bottomMessageData } in renderData">
       <!-- 在内置footer上方渲染 -->
       <p v-for="message in messageData" v-html="message" />
       <!-- 内置的列表 -->
@@ -96,10 +96,15 @@ const renderData = computed(() => {
         <template v-for="item in data">
           <span v-if="typeof item !== 'string'" class="footer-item">
             <i v-if="item.icon === 'security'">
-              <img src="./../styles/gongan.png" alt="公网安备">
+              <img src="./../styles/gongan.png" alt="公网安备" />
             </i>
             <i v-else-if="item.icon" v-html="item.icon" />
-            <a v-if="item.link" :href="item.link" target="_blank" rel="noopener noreferrer">
+            <a
+              v-if="item.link"
+              :href="item.link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {{ item.name }}
             </a>
             <span v-else>{{ item.name }}</span>

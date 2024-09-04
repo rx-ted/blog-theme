@@ -39,13 +39,6 @@ export function getVitePlugins(cfg: Partial<Theme.BlogConfig> = {}) {
     )
   }
 
-  // 内置支持Mermaid
-  if (cfg?.mermaid !== false) {
-    const { MermaidPlugin } = _require('vitepress-plugin-mermaid')
-    plugins.push(inlineInjectMermaidClient())
-    plugins.push(MermaidPlugin(cfg?.mermaid === true ? {} : (cfg?.mermaid ?? {})))
-  }
-
   // 内置支持RSS
   if (cfg?.RSS) {
     ;[cfg?.RSS].flat().forEach(rssConfig => plugins.push(RssPlugin(rssConfig)))
@@ -59,47 +52,6 @@ export function registerVitePlugins(vpCfg: any, plugins: any[]) {
   }
 }
 
-export function inlineInjectMermaidClient() {
-  return {
-    name: '@sugarat/theme-plugin-inline-inject-mermaid-client',
-    enforce: 'pre',
-    transform(code, id) {
-      if (id.endsWith('src/index.ts') && code.startsWith('// @sugarat/theme index')) {
-        return code
-          .replace('// replace-mermaid-import-code', 'import Mermaid from \'vitepress-plugin-mermaid/Mermaid.vue\'')
-          .replace('// replace-mermaid-mounted-code', 'if (!ctx.app.component(\'Mermaid\')) { ctx.app.component(\'Mermaid\', Mermaid as any) }')
-      }
-      return code
-    },
-  } as PluginOption
-}
-
-export function inlineBuildEndPlugin(buildEndFn: any[]) {
-  let rewrite = false
-  return {
-    name: '@sugarar/theme-plugin-build-end',
-    enforce: 'pre',
-    configResolved(config: any) {
-      // 避免重复定义
-      if (rewrite) {
-        return
-      }
-      const vitepressConfig: SiteConfig = config.vitepress
-      if (!vitepressConfig) {
-        return
-      }
-      rewrite = true
-      // 添加 自定义 vitepress build 的钩子
-      const selfBuildEnd = vitepressConfig.buildEnd
-      vitepressConfig.buildEnd = (siteCfg) => {
-        selfBuildEnd?.(siteCfg)
-        buildEndFn
-          .filter(fn => typeof fn === 'function')
-          .forEach(fn => fn(siteCfg))
-      }
-    }
-  }
-}
 
 // TODO: 支持frontmatter中的相对路径图片自动处理
 export function coverImgTransform() {

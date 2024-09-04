@@ -14,7 +14,7 @@ export function themeReloadPlugin() {
   }
 
   return {
-    name: '@sugarat/theme-reload',
+    name: '@rx-ted/theme-reload',
     apply: 'serve',
     configureServer(server) {
       const restart = debounce(() => {

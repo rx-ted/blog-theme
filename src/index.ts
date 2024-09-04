@@ -1,4 +1,4 @@
-// @sugarat/theme index
+// @rx-ted/theme index
 // override style
 import './styles/index.scss'
 
@@ -23,9 +23,6 @@ import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import { enhanceAppWithTabs } from 'vitepress-plugin-tabs/client'
 
-// 图表渲染组件
-// replace-mermaid-import-code
-// import Mermaid from 'vitepress-plugin-mermaid/Mermaid.vue'
 import BlogApp from './components/BlogApp.vue'
 import { withConfigProvider } from './composables/config/blog'
 
@@ -42,8 +39,6 @@ export const BlogTheme: Theme = {
         enhanceAppWithTabs(ctx.app as any)
         DefaultTheme.enhanceApp(ctx)
         ctx.app.component('UserWorksPage', UserWorksPage as any)
-        // replace-mermaid-mounted-code
-        // if (!ctx.app.component('Mermaid')) { ctx.app.component('Mermaid', Mermaid as any) }
     }
 }
 
