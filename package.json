@@ -1,13 +1,13 @@
 {
   "name": "@rx-ted/theme",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "blog theme",
   "main": "src/index.ts",
   "scripts": {
     "build": "tsup && vue-tsc"
   },
   "publishConfig": {
-    "@rx-ted:registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com"
   },
   "repository": {
     "type": "git",
