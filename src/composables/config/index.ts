@@ -199,6 +199,7 @@ export namespace Theme {
     inspiringTimeout?: number
     pageSize?: number
     author?: string | boolean
+    authorImgUrl?:string
     logo?: string | boolean
     /**
      * @default 'card'

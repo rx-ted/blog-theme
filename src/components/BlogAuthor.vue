@@ -1,29 +1,31 @@
 <script setup>
-import { useData, withBase } from 'vitepress'
-import { computed } from 'vue'
-import { useBlogConfig } from '../composables/config/blog'
+import { useData, withBase } from "vitepress";
+import { computed } from "vue";
+import { useBlogConfig } from "../composables/config/blog";
 
-const { home } = useBlogConfig()
-const { frontmatter, site } = useData()
-const author = computed(() =>
-  frontmatter.value.author
-  ?? frontmatter.value?.blog?.author
-  ?? home?.author
-  ?? site.value.themeConfig?.blog?.author
-)
-const logo = computed(() =>
-  frontmatter.value?.logo
-  ?? frontmatter.value?.blog?.logo
-  ?? home?.logo
-  ?? site.value?.themeConfig?.logo
-  ?? '/logo.png'
-)
-const show = computed(() => author.value || logo.value)
+const { home } = useBlogConfig();
+const { frontmatter, site } = useData();
+const author = computed(
+  () =>
+    frontmatter.value.author ??
+    frontmatter.value?.blog?.author ??
+    home?.author ??
+    site.value.themeConfig?.blog?.author
+);
+const authorImgUrl = computed(
+  () =>
+    frontmatter.value?.authorImgUrl ??
+    frontmatter.value?.blog?.authorImgUrl ??
+    home?.authorImgUrl ??
+    site.value?.themeConfig?.authorImgUrl ??
+    ""
+);
+const show = computed(() => author.value || logo.value);
 </script>
 
 <template>
   <div v-if="show" class="blog-author">
-    <img v-if="logo" :src="withBase(logo)" alt="avatar">
+    <img v-if="authorImgUrl" :src="withBase(authorImgUrl)" alt="avatar" />
     <p v-if="author">
       {{ author }}
     </p>
@@ -46,7 +48,7 @@ const show = computed(() => author.value || logo.value)
   img:hover {
     transform: rotate(666turn);
     transition-duration: 59s;
-    transition-timing-function: cubic-bezier(.34, 0, .84, 1)
+    transition-timing-function: cubic-bezier(0.34, 0, 0.84, 1);
   }
 
   p {
