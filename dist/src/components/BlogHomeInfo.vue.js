@@ -1,4 +1,4 @@
-/// <reference types=".vue-global-types/vue_3.4_false.d.ts" />
+/// <reference types=".vue-global-types/vue_3.5_false.d.ts" />
 import BlogHomeOverview from './BlogHomeOverview.vue';
 import BlogHotArticle from './BlogHotArticle.vue';
 import BlogHomeTags from './BlogHomeTags.vue';

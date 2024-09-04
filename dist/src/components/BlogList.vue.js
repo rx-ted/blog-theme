@@ -1,4 +1,4 @@
-/// <reference types=".vue-global-types/vue_3.4_false.d.ts" />
+/// <reference types=".vue-global-types/vue_3.5_false.d.ts" />
 import { computed, watch } from 'vue';
 import { ElPagination } from 'element-plus';
 import { useData, useRoute, useRouter } from 'vitepress';

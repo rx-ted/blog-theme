@@ -383,7 +383,7 @@ var require_path = __commonJS({
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.convertPosixPathToPattern = exports2.convertWindowsPathToPattern = exports2.convertPathToPattern = exports2.escapePosixPath = exports2.escapeWindowsPath = exports2.escape = exports2.removeLeadingDotSegment = exports2.makeAbsolute = exports2.unixify = void 0;
     var os3 = require("os");
-    var path8 = require("path");
+    var path7 = require("path");
     var IS_WINDOWS_PLATFORM = os3.platform() === "win32";
     var LEADING_DOT_SEGMENT_CHARACTERS_COUNT = 2;
     var POSIX_UNESCAPED_GLOB_SYMBOLS_RE = /(\\?)([()*?[\]{|}]|^!|[!+@](?=\()|\\(?![!()*+?@[\]{|}]))/g;
@@ -395,7 +395,7 @@ var require_path = __commonJS({
     }
     exports2.unixify = unixify;
     function makeAbsolute(cwd, filepath) {
-      return path8.resolve(cwd, filepath);
+      return path7.resolve(cwd, filepath);
     }
     exports2.makeAbsolute = makeAbsolute;
     function removeLeadingDotSegment(entry) {
@@ -696,7 +696,7 @@ var require_stringify = __commonJS({
     "use strict";
     var utils = require_utils();
     module2.exports = (ast, options2 = {}) => {
-      const stringify2 = (node, parent = {}) => {
+      const stringify = (node, parent = {}) => {
         const invalidBlock = options2.escapeInvalid && utils.isInvalidBrace(parent);
         const invalidNode = node.invalid === true && options2.escapeInvalid === true;
         let output = "";
@@ -711,12 +711,12 @@ var require_stringify = __commonJS({
         }
         if (node.nodes) {
           for (const child of node.nodes) {
-            output += stringify2(child);
+            output += stringify(child);
           }
         }
         return output;
       };
-      return stringify2(ast);
+      return stringify(ast);
     };
   }
 });
@@ -970,7 +970,7 @@ var require_fill_range = __commonJS({
       while (value[++index] === "0") ;
       return index > 0;
     };
-    var stringify2 = (start, end, options2) => {
+    var stringify = (start, end, options2) => {
       if (typeof start === "string" || typeof end === "string") {
         return true;
       }
@@ -1065,7 +1065,7 @@ var require_fill_range = __commonJS({
       step = Math.max(Math.abs(step), 1);
       let padded = zeros(startString) || zeros(endString) || zeros(stepString);
       let maxLen = padded ? Math.max(startString.length, endString.length, stepString.length) : 0;
-      let toNumber = padded === false && stringify2(start, end, options2) === false;
+      let toNumber = padded === false && stringify(start, end, options2) === false;
       let format = options2.transform || transform(toNumber);
       if (options2.toRegex && step === 1) {
         return toRange(toMaxLen(start, maxLen), toMaxLen(end, maxLen), true, options2);
@@ -1199,7 +1199,7 @@ var require_expand = __commonJS({
   "node_modules/braces/lib/expand.js"(exports2, module2) {
     "use strict";
     var fill = require_fill_range();
-    var stringify2 = require_stringify();
+    var stringify = require_stringify();
     var utils = require_utils();
     var append = (queue = "", stash = "", enclose = false) => {
       const result = [];
@@ -1234,7 +1234,7 @@ var require_expand = __commonJS({
           q = p.queue;
         }
         if (node.invalid || node.dollar) {
-          q.push(append(q.pop(), stringify2(node, options2)));
+          q.push(append(q.pop(), stringify(node, options2)));
           return;
         }
         if (node.type === "brace" && node.invalid !== true && node.nodes.length === 2) {
@@ -1248,7 +1248,7 @@ var require_expand = __commonJS({
           }
           let range = fill(...args, options2);
           if (range.length === 0) {
-            range = stringify2(node, options2);
+            range = stringify(node, options2);
           }
           q.push(append(q.pop(), range));
           node.nodes = [];
@@ -1393,7 +1393,7 @@ var require_constants = __commonJS({
 var require_parse = __commonJS({
   "node_modules/braces/lib/parse.js"(exports2, module2) {
     "use strict";
-    var stringify2 = require_stringify();
+    var stringify = require_stringify();
     var {
       MAX_LENGTH,
       CHAR_BACKSLASH,
@@ -1565,7 +1565,7 @@ var require_parse = __commonJS({
           if (block.ranges > 0) {
             block.ranges = 0;
             const open = block.nodes.shift();
-            block.nodes = [open, { type: "text", value: stringify2(block) }];
+            block.nodes = [open, { type: "text", value: stringify(block) }];
           }
           push({ type: "comma", value });
           block.commas++;
@@ -1631,7 +1631,7 @@ var require_parse = __commonJS({
 var require_braces = __commonJS({
   "node_modules/braces/index.js"(exports2, module2) {
     "use strict";
-    var stringify2 = require_stringify();
+    var stringify = require_stringify();
     var compile = require_compile();
     var expand = require_expand();
     var parse2 = require_parse();
@@ -1657,9 +1657,9 @@ var require_braces = __commonJS({
     braces.parse = (input, options2 = {}) => parse2(input, options2);
     braces.stringify = (input, options2 = {}) => {
       if (typeof input === "string") {
-        return stringify2(braces.parse(input, options2), options2);
+        return stringify(braces.parse(input, options2), options2);
       }
-      return stringify2(input, options2);
+      return stringify(input, options2);
     };
     braces.compile = (input, options2 = {}) => {
       if (typeof input === "string") {
@@ -1694,7 +1694,7 @@ var require_braces = __commonJS({
 var require_constants2 = __commonJS({
   "node_modules/picomatch/lib/constants.js"(exports2, module2) {
     "use strict";
-    var path8 = require("path");
+    var path7 = require("path");
     var WIN_SLASH = "\\\\/";
     var WIN_NO_SLASH = `[^${WIN_SLASH}]`;
     var DOT_LITERAL = "\\.";
@@ -1864,7 +1864,7 @@ var require_constants2 = __commonJS({
       /* | */
       CHAR_ZERO_WIDTH_NOBREAK_SPACE: 65279,
       /* \uFEFF */
-      SEP: path8.sep,
+      SEP: path7.sep,
       /**
        * Create EXTGLOB_CHARS
        */
@@ -1891,7 +1891,7 @@ var require_constants2 = __commonJS({
 var require_utils2 = __commonJS({
   "node_modules/picomatch/lib/utils.js"(exports2) {
     "use strict";
-    var path8 = require("path");
+    var path7 = require("path");
     var win32 = process.platform === "win32";
     var {
       REGEX_BACKSLASH,
@@ -1920,7 +1920,7 @@ var require_utils2 = __commonJS({
       if (options2 && typeof options2.windows === "boolean") {
         return options2.windows;
       }
-      return win32 === true || path8.sep === "\\";
+      return win32 === true || path7.sep === "\\";
     };
     exports2.escapeLast = (input, char, lastIdx) => {
       const idx = input.lastIndexOf(char, lastIdx);
@@ -3055,7 +3055,7 @@ var require_parse2 = __commonJS({
 var require_picomatch = __commonJS({
   "node_modules/picomatch/lib/picomatch.js"(exports2, module2) {
     "use strict";
-    var path8 = require("path");
+    var path7 = require("path");
     var scan = require_scan();
     var parse2 = require_parse2();
     var utils = require_utils2();
@@ -3140,7 +3140,7 @@ var require_picomatch = __commonJS({
     };
     picomatch.matchBase = (input, glob3, options2, posix = utils.isWindows(options2)) => {
       const regex = glob3 instanceof RegExp ? glob3 : picomatch.makeRe(glob3, options2);
-      return regex.test(path8.basename(input));
+      return regex.test(path7.basename(input));
     };
     picomatch.isMatch = (str2, patterns, options2) => picomatch(patterns, options2)(str2);
     picomatch.parse = (pattern, options2) => {
@@ -3367,7 +3367,7 @@ var require_pattern = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.removeDuplicateSlashes = exports2.matchAny = exports2.convertPatternsToRe = exports2.makeRe = exports2.getPatternParts = exports2.expandBraceExpansion = exports2.expandPatternsWithBraceExpansion = exports2.isAffectDepthOfReadingPattern = exports2.endsWithSlashGlobStar = exports2.hasGlobStar = exports2.getBaseDirectory = exports2.isPatternRelatedToParentDirectory = exports2.getPatternsOutsideCurrentDirectory = exports2.getPatternsInsideCurrentDirectory = exports2.getPositivePatterns = exports2.getNegativePatterns = exports2.isPositivePattern = exports2.isNegativePattern = exports2.convertToNegativePattern = exports2.convertToPositivePattern = exports2.isDynamicPattern = exports2.isStaticPattern = void 0;
-    var path8 = require("path");
+    var path7 = require("path");
     var globParent = require_glob_parent();
     var micromatch = require_micromatch();
     var GLOBSTAR = "**";
@@ -3462,7 +3462,7 @@ var require_pattern = __commonJS({
     }
     exports2.endsWithSlashGlobStar = endsWithSlashGlobStar;
     function isAffectDepthOfReadingPattern(pattern) {
-      const basename = path8.basename(pattern);
+      const basename = path7.basename(pattern);
       return endsWithSlashGlobStar(pattern) || isStaticPattern(basename);
     }
     exports2.isAffectDepthOfReadingPattern = isAffectDepthOfReadingPattern;
@@ -3678,10 +3678,10 @@ var require_utils3 = __commonJS({
     exports2.array = array;
     var errno = require_errno();
     exports2.errno = errno;
-    var fs6 = require_fs();
-    exports2.fs = fs6;
-    var path8 = require_path();
-    exports2.path = path8;
+    var fs5 = require_fs();
+    exports2.fs = fs5;
+    var path7 = require_path();
+    exports2.path = path7;
     var pattern = require_pattern();
     exports2.pattern = pattern;
     var stream = require_stream();
@@ -3793,8 +3793,8 @@ var require_async = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.read = void 0;
-    function read(path8, settings, callback) {
-      settings.fs.lstat(path8, (lstatError, lstat) => {
+    function read(path7, settings, callback) {
+      settings.fs.lstat(path7, (lstatError, lstat) => {
         if (lstatError !== null) {
           callFailureCallback(callback, lstatError);
           return;
@@ -3803,7 +3803,7 @@ var require_async = __commonJS({
           callSuccessCallback(callback, lstat);
           return;
         }
-        settings.fs.stat(path8, (statError, stat) => {
+        settings.fs.stat(path7, (statError, stat) => {
           if (statError !== null) {
             if (settings.throwErrorOnBrokenSymbolicLink) {
               callFailureCallback(callback, statError);
@@ -3835,13 +3835,13 @@ var require_sync = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.read = void 0;
-    function read(path8, settings) {
-      const lstat = settings.fs.lstatSync(path8);
+    function read(path7, settings) {
+      const lstat = settings.fs.lstatSync(path7);
       if (!lstat.isSymbolicLink() || !settings.followSymbolicLink) {
         return lstat;
       }
       try {
-        const stat = settings.fs.statSync(path8);
+        const stat = settings.fs.statSync(path7);
         if (settings.markSymbolicLink) {
           stat.isSymbolicLink = () => true;
         }
@@ -3863,12 +3863,12 @@ var require_fs2 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createFileSystemAdapter = exports2.FILE_SYSTEM_ADAPTER = void 0;
-    var fs6 = require("fs");
+    var fs5 = require("fs");
     exports2.FILE_SYSTEM_ADAPTER = {
-      lstat: fs6.lstat,
-      stat: fs6.stat,
-      lstatSync: fs6.lstatSync,
-      statSync: fs6.statSync
+      lstat: fs5.lstat,
+      stat: fs5.stat,
+      lstatSync: fs5.lstatSync,
+      statSync: fs5.statSync
     };
     function createFileSystemAdapter(fsMethods) {
       if (fsMethods === void 0) {
@@ -3885,12 +3885,12 @@ var require_settings = __commonJS({
   "node_modules/@nodelib/fs.stat/out/settings.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    var fs6 = require_fs2();
+    var fs5 = require_fs2();
     var Settings = class {
       constructor(_options = {}) {
         this._options = _options;
         this.followSymbolicLink = this._getValue(this._options.followSymbolicLink, true);
-        this.fs = fs6.createFileSystemAdapter(this._options.fs);
+        this.fs = fs5.createFileSystemAdapter(this._options.fs);
         this.markSymbolicLink = this._getValue(this._options.markSymbolicLink, false);
         this.throwErrorOnBrokenSymbolicLink = this._getValue(this._options.throwErrorOnBrokenSymbolicLink, true);
       }
@@ -3912,17 +3912,17 @@ var require_out = __commonJS({
     var sync = require_sync();
     var settings_1 = require_settings();
     exports2.Settings = settings_1.default;
-    function stat(path8, optionsOrSettingsOrCallback, callback) {
+    function stat(path7, optionsOrSettingsOrCallback, callback) {
       if (typeof optionsOrSettingsOrCallback === "function") {
-        async.read(path8, getSettings(), optionsOrSettingsOrCallback);
+        async.read(path7, getSettings(), optionsOrSettingsOrCallback);
         return;
       }
-      async.read(path8, getSettings(optionsOrSettingsOrCallback), callback);
+      async.read(path7, getSettings(optionsOrSettingsOrCallback), callback);
     }
     exports2.stat = stat;
-    function statSync(path8, optionsOrSettings) {
+    function statSync(path7, optionsOrSettings) {
       const settings = getSettings(optionsOrSettings);
-      return sync.read(path8, settings);
+      return sync.read(path7, settings);
     }
     exports2.statSync = statSync;
     function getSettings(settingsOrOptions = {}) {
@@ -4047,8 +4047,8 @@ var require_utils4 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.fs = void 0;
-    var fs6 = require_fs3();
-    exports2.fs = fs6;
+    var fs5 = require_fs3();
+    exports2.fs = fs5;
   }
 });
 
@@ -4140,16 +4140,16 @@ var require_async2 = __commonJS({
           return;
         }
         const tasks = names.map((name) => {
-          const path8 = common.joinPathSegments(directory, name, settings.pathSegmentSeparator);
+          const path7 = common.joinPathSegments(directory, name, settings.pathSegmentSeparator);
           return (done) => {
-            fsStat.stat(path8, settings.fsStatSettings, (error, stats) => {
+            fsStat.stat(path7, settings.fsStatSettings, (error, stats) => {
               if (error !== null) {
                 done(error);
                 return;
               }
               const entry = {
                 name,
-                path: path8,
+                path: path7,
                 dirent: utils.fs.createDirentFromStats(name, stats)
               };
               if (settings.stats) {
@@ -4243,14 +4243,14 @@ var require_fs4 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createFileSystemAdapter = exports2.FILE_SYSTEM_ADAPTER = void 0;
-    var fs6 = require("fs");
+    var fs5 = require("fs");
     exports2.FILE_SYSTEM_ADAPTER = {
-      lstat: fs6.lstat,
-      stat: fs6.stat,
-      lstatSync: fs6.lstatSync,
-      statSync: fs6.statSync,
-      readdir: fs6.readdir,
-      readdirSync: fs6.readdirSync
+      lstat: fs5.lstat,
+      stat: fs5.stat,
+      lstatSync: fs5.lstatSync,
+      statSync: fs5.statSync,
+      readdir: fs5.readdir,
+      readdirSync: fs5.readdirSync
     };
     function createFileSystemAdapter(fsMethods) {
       if (fsMethods === void 0) {
@@ -4267,15 +4267,15 @@ var require_settings2 = __commonJS({
   "node_modules/@nodelib/fs.scandir/out/settings.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    var path8 = require("path");
+    var path7 = require("path");
     var fsStat = require_out();
-    var fs6 = require_fs4();
+    var fs5 = require_fs4();
     var Settings = class {
       constructor(_options = {}) {
         this._options = _options;
         this.followSymbolicLinks = this._getValue(this._options.followSymbolicLinks, false);
-        this.fs = fs6.createFileSystemAdapter(this._options.fs);
-        this.pathSegmentSeparator = this._getValue(this._options.pathSegmentSeparator, path8.sep);
+        this.fs = fs5.createFileSystemAdapter(this._options.fs);
+        this.pathSegmentSeparator = this._getValue(this._options.pathSegmentSeparator, path7.sep);
         this.stats = this._getValue(this._options.stats, false);
         this.throwErrorOnBrokenSymbolicLink = this._getValue(this._options.throwErrorOnBrokenSymbolicLink, true);
         this.fsStatSettings = new fsStat.Settings({
@@ -4302,17 +4302,17 @@ var require_out2 = __commonJS({
     var sync = require_sync2();
     var settings_1 = require_settings2();
     exports2.Settings = settings_1.default;
-    function scandir(path8, optionsOrSettingsOrCallback, callback) {
+    function scandir(path7, optionsOrSettingsOrCallback, callback) {
       if (typeof optionsOrSettingsOrCallback === "function") {
-        async.read(path8, getSettings(), optionsOrSettingsOrCallback);
+        async.read(path7, getSettings(), optionsOrSettingsOrCallback);
         return;
       }
-      async.read(path8, getSettings(optionsOrSettingsOrCallback), callback);
+      async.read(path7, getSettings(optionsOrSettingsOrCallback), callback);
     }
     exports2.scandir = scandir;
-    function scandirSync(path8, optionsOrSettings) {
+    function scandirSync(path7, optionsOrSettings) {
       const settings = getSettings(optionsOrSettings);
-      return sync.read(path8, settings);
+      return sync.read(path7, settings);
     }
     exports2.scandirSync = scandirSync;
     function getSettings(settingsOrOptions = {}) {
@@ -4934,7 +4934,7 @@ var require_settings3 = __commonJS({
   "node_modules/@nodelib/fs.walk/out/settings.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    var path8 = require("path");
+    var path7 = require("path");
     var fsScandir = require_out2();
     var Settings = class {
       constructor(_options = {}) {
@@ -4944,7 +4944,7 @@ var require_settings3 = __commonJS({
         this.deepFilter = this._getValue(this._options.deepFilter, null);
         this.entryFilter = this._getValue(this._options.entryFilter, null);
         this.errorFilter = this._getValue(this._options.errorFilter, null);
-        this.pathSegmentSeparator = this._getValue(this._options.pathSegmentSeparator, path8.sep);
+        this.pathSegmentSeparator = this._getValue(this._options.pathSegmentSeparator, path7.sep);
         this.fsScandirSettings = new fsScandir.Settings({
           followSymbolicLinks: this._options.followSymbolicLinks,
           fs: this._options.fs,
@@ -5006,7 +5006,7 @@ var require_reader2 = __commonJS({
   "node_modules/fast-glob/out/readers/reader.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    var path8 = require("path");
+    var path7 = require("path");
     var fsStat = require_out();
     var utils = require_utils3();
     var Reader = class {
@@ -5019,7 +5019,7 @@ var require_reader2 = __commonJS({
         });
       }
       _getFullEntryPath(filepath) {
-        return path8.resolve(this._settings.cwd, filepath);
+        return path7.resolve(this._settings.cwd, filepath);
       }
       _makeEntry(stats, pattern) {
         const entry = {
@@ -5413,7 +5413,7 @@ var require_provider = __commonJS({
   "node_modules/fast-glob/out/providers/provider.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    var path8 = require("path");
+    var path7 = require("path");
     var deep_1 = require_deep();
     var entry_1 = require_entry();
     var error_1 = require_error();
@@ -5427,7 +5427,7 @@ var require_provider = __commonJS({
         this.entryTransformer = new entry_2.default(this._settings);
       }
       _getRootDirectory(task) {
-        return path8.resolve(this._settings.cwd, task.base);
+        return path7.resolve(this._settings.cwd, task.base);
       }
       _getReaderOptions(task) {
         const basePath = task.base === "." ? "" : task.base;
@@ -5608,16 +5608,16 @@ var require_settings4 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DEFAULT_FILE_SYSTEM_ADAPTER = void 0;
-    var fs6 = require("fs");
+    var fs5 = require("fs");
     var os3 = require("os");
     var CPU_COUNT = Math.max(os3.cpus().length, 1);
     exports2.DEFAULT_FILE_SYSTEM_ADAPTER = {
-      lstat: fs6.lstat,
-      lstatSync: fs6.lstatSync,
-      stat: fs6.stat,
-      statSync: fs6.statSync,
-      readdir: fs6.readdir,
-      readdirSync: fs6.readdirSync
+      lstat: fs5.lstat,
+      lstatSync: fs5.lstatSync,
+      stat: fs5.stat,
+      statSync: fs5.statSync,
+      readdir: fs5.readdir,
+      readdirSync: fs5.readdirSync
     };
     var Settings = class {
       constructor(_options = {}) {
@@ -5769,8 +5769,8 @@ var require_windows = __commonJS({
     "use strict";
     module2.exports = isexe;
     isexe.sync = sync;
-    var fs6 = require("fs");
-    function checkPathExt(path8, options2) {
+    var fs5 = require("fs");
+    function checkPathExt(path7, options2) {
       var pathext = options2.pathExt !== void 0 ? options2.pathExt : process.env.PATHEXT;
       if (!pathext) {
         return true;
@@ -5781,25 +5781,25 @@ var require_windows = __commonJS({
       }
       for (var i = 0; i < pathext.length; i++) {
         var p = pathext[i].toLowerCase();
-        if (p && path8.substr(-p.length).toLowerCase() === p) {
+        if (p && path7.substr(-p.length).toLowerCase() === p) {
           return true;
         }
       }
       return false;
     }
-    function checkStat(stat, path8, options2) {
+    function checkStat(stat, path7, options2) {
       if (!stat.isSymbolicLink() && !stat.isFile()) {
         return false;
       }
-      return checkPathExt(path8, options2);
+      return checkPathExt(path7, options2);
     }
-    function isexe(path8, options2, cb) {
-      fs6.stat(path8, function(er, stat) {
-        cb(er, er ? false : checkStat(stat, path8, options2));
+    function isexe(path7, options2, cb) {
+      fs5.stat(path7, function(er, stat) {
+        cb(er, er ? false : checkStat(stat, path7, options2));
       });
     }
-    function sync(path8, options2) {
-      return checkStat(fs6.statSync(path8), path8, options2);
+    function sync(path7, options2) {
+      return checkStat(fs5.statSync(path7), path7, options2);
     }
   }
 });
@@ -5810,14 +5810,14 @@ var require_mode = __commonJS({
     "use strict";
     module2.exports = isexe;
     isexe.sync = sync;
-    var fs6 = require("fs");
-    function isexe(path8, options2, cb) {
-      fs6.stat(path8, function(er, stat) {
+    var fs5 = require("fs");
+    function isexe(path7, options2, cb) {
+      fs5.stat(path7, function(er, stat) {
         cb(er, er ? false : checkStat(stat, options2));
       });
     }
-    function sync(path8, options2) {
-      return checkStat(fs6.statSync(path8), options2);
+    function sync(path7, options2) {
+      return checkStat(fs5.statSync(path7), options2);
     }
     function checkStat(stat, options2) {
       return stat.isFile() && checkMode(stat, options2);
@@ -5842,7 +5842,7 @@ var require_mode = __commonJS({
 var require_isexe = __commonJS({
   "node_modules/isexe/index.js"(exports2, module2) {
     "use strict";
-    var fs6 = require("fs");
+    var fs5 = require("fs");
     var core;
     if (process.platform === "win32" || global.TESTING_WINDOWS) {
       core = require_windows();
@@ -5851,7 +5851,7 @@ var require_isexe = __commonJS({
     }
     module2.exports = isexe;
     isexe.sync = sync;
-    function isexe(path8, options2, cb) {
+    function isexe(path7, options2, cb) {
       if (typeof options2 === "function") {
         cb = options2;
         options2 = {};
@@ -5861,7 +5861,7 @@ var require_isexe = __commonJS({
           throw new TypeError("callback not provided");
         }
         return new Promise(function(resolve, reject) {
-          isexe(path8, options2 || {}, function(er, is) {
+          isexe(path7, options2 || {}, function(er, is) {
             if (er) {
               reject(er);
             } else {
@@ -5870,7 +5870,7 @@ var require_isexe = __commonJS({
           });
         });
       }
-      core(path8, options2 || {}, function(er, is) {
+      core(path7, options2 || {}, function(er, is) {
         if (er) {
           if (er.code === "EACCES" || options2 && options2.ignoreErrors) {
             er = null;
@@ -5880,9 +5880,9 @@ var require_isexe = __commonJS({
         cb(er, is);
       });
     }
-    function sync(path8, options2) {
+    function sync(path7, options2) {
       try {
-        return core.sync(path8, options2 || {});
+        return core.sync(path7, options2 || {});
       } catch (er) {
         if (options2 && options2.ignoreErrors || er.code === "EACCES") {
           return false;
@@ -5899,7 +5899,7 @@ var require_which = __commonJS({
   "node_modules/which/which.js"(exports2, module2) {
     "use strict";
     var isWindows3 = process.platform === "win32" || process.env.OSTYPE === "cygwin" || process.env.OSTYPE === "msys";
-    var path8 = require("path");
+    var path7 = require("path");
     var COLON = isWindows3 ? ";" : ":";
     var isexe = require_isexe();
     var getNotFoundError = (cmd) => Object.assign(new Error(`not found: ${cmd}`), { code: "ENOENT" });
@@ -5937,7 +5937,7 @@ var require_which = __commonJS({
           return opt.all && found.length ? resolve(found) : reject(getNotFoundError(cmd));
         const ppRaw = pathEnv[i];
         const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw;
-        const pCmd = path8.join(pathPart, cmd);
+        const pCmd = path7.join(pathPart, cmd);
         const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd : pCmd;
         resolve(subStep(p, i, 0));
       });
@@ -5964,7 +5964,7 @@ var require_which = __commonJS({
       for (let i = 0; i < pathEnv.length; i++) {
         const ppRaw = pathEnv[i];
         const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw;
-        const pCmd = path8.join(pathPart, cmd);
+        const pCmd = path7.join(pathPart, cmd);
         const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd : pCmd;
         for (let j = 0; j < pathExt.length; j++) {
           const cur = p + pathExt[j];
@@ -6012,7 +6012,7 @@ var require_path_key = __commonJS({
 var require_resolveCommand = __commonJS({
   "node_modules/cross-spawn/lib/util/resolveCommand.js"(exports2, module2) {
     "use strict";
-    var path8 = require("path");
+    var path7 = require("path");
     var which = require_which();
     var getPathKey = require_path_key();
     function resolveCommandAttempt(parsed, withoutPathExt) {
@@ -6030,7 +6030,7 @@ var require_resolveCommand = __commonJS({
       try {
         resolved = which.sync(parsed.command, {
           path: env[getPathKey({ env })],
-          pathExt: withoutPathExt ? path8.delimiter : void 0
+          pathExt: withoutPathExt ? path7.delimiter : void 0
         });
       } catch (e2) {
       } finally {
@@ -6039,7 +6039,7 @@ var require_resolveCommand = __commonJS({
         }
       }
       if (resolved) {
-        resolved = path8.resolve(hasCustomCwd ? parsed.options.cwd : "", resolved);
+        resolved = path7.resolve(hasCustomCwd ? parsed.options.cwd : "", resolved);
       }
       return resolved;
     }
@@ -6093,8 +6093,8 @@ var require_shebang_command = __commonJS({
       if (!match) {
         return null;
       }
-      const [path8, argument] = match[0].replace(/#! ?/, "").split(" ");
-      const binary = path8.split("/").pop();
+      const [path7, argument] = match[0].replace(/#! ?/, "").split(" ");
+      const binary = path7.split("/").pop();
       if (binary === "env") {
         return argument;
       }
@@ -6107,16 +6107,16 @@ var require_shebang_command = __commonJS({
 var require_readShebang = __commonJS({
   "node_modules/cross-spawn/lib/util/readShebang.js"(exports2, module2) {
     "use strict";
-    var fs6 = require("fs");
+    var fs5 = require("fs");
     var shebangCommand = require_shebang_command();
     function readShebang(command) {
       const size = 150;
       const buffer = Buffer.alloc(size);
       let fd;
       try {
-        fd = fs6.openSync(command, "r");
-        fs6.readSync(fd, buffer, 0, size, 0);
-        fs6.closeSync(fd);
+        fd = fs5.openSync(command, "r");
+        fs5.readSync(fd, buffer, 0, size, 0);
+        fs5.closeSync(fd);
       } catch (e2) {
       }
       return shebangCommand(buffer.toString());
@@ -6129,7 +6129,7 @@ var require_readShebang = __commonJS({
 var require_parse3 = __commonJS({
   "node_modules/cross-spawn/lib/parse.js"(exports2, module2) {
     "use strict";
-    var path8 = require("path");
+    var path7 = require("path");
     var resolveCommand = require_resolveCommand();
     var escape = require_escape();
     var readShebang = require_readShebang();
@@ -6154,7 +6154,7 @@ var require_parse3 = __commonJS({
       const needsShell = !isExecutableRegExp.test(commandFile);
       if (parsed.options.forceShell || needsShell) {
         const needsDoubleEscapeMetaChars = isCmdShimRegExp.test(commandFile);
-        parsed.command = path8.normalize(parsed.command);
+        parsed.command = path7.normalize(parsed.command);
         parsed.command = escape.command(parsed.command);
         parsed.args = parsed.args.map((arg) => escape.argument(arg, needsDoubleEscapeMetaChars));
         const shellCommand = [parsed.command].concat(parsed.args).join(" ");
@@ -9574,7 +9574,7 @@ var require_to_file = __commonJS({
   "node_modules/gray-matter/lib/to-file.js"(exports2, module2) {
     "use strict";
     var typeOf = require_kind_of();
-    var stringify2 = require_stringify2();
+    var stringify = require_stringify2();
     var utils = require_utils5();
     module2.exports = function(file) {
       if (typeOf(file) !== "object") {
@@ -9593,7 +9593,7 @@ var require_to_file = __commonJS({
         if (options2 && options2.language) {
           file.language = options2.language;
         }
-        return stringify2(file, data, options2);
+        return stringify(file, data, options2);
       });
       file.content = utils.toString(file.content);
       file.isEmpty = false;
@@ -9624,10 +9624,10 @@ var require_parse4 = __commonJS({
 var require_gray_matter = __commonJS({
   "node_modules/gray-matter/index.js"(exports2, module2) {
     "use strict";
-    var fs6 = require("fs");
+    var fs5 = require("fs");
     var sections = require_section_matter();
     var defaults = require_defaults();
-    var stringify2 = require_stringify2();
+    var stringify = require_stringify2();
     var excerpt = require_excerpt();
     var engines2 = require_engines();
     var toFile = require_to_file();
@@ -9705,10 +9705,10 @@ var require_gray_matter = __commonJS({
     matter3.engines = engines2;
     matter3.stringify = function(file, data, options2) {
       if (typeof file === "string") file = matter3(file, options2);
-      return stringify2(file, data, options2);
+      return stringify(file, data, options2);
     };
     matter3.read = function(filepath, options2) {
-      const str2 = fs6.readFileSync(filepath, "utf8");
+      const str2 = fs5.readFileSync(filepath, "utf8");
       const file = matter3(str2, options2);
       file.path = filepath;
       return file;
@@ -9733,528 +9733,6 @@ var require_gray_matter = __commonJS({
       matter3.cache = {};
     };
     module2.exports = matter3;
-  }
-});
-
-// node_modules/javascript-stringify/dist/quote.js
-var require_quote = __commonJS({
-  "node_modules/javascript-stringify/dist/quote.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.stringifyPath = exports2.quoteKey = exports2.isValidVariableName = exports2.IS_VALID_IDENTIFIER = exports2.quoteString = void 0;
-    var ESCAPABLE = /[\\\'\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
-    var META_CHARS = /* @__PURE__ */ new Map([
-      ["\b", "\\b"],
-      ["	", "\\t"],
-      ["\n", "\\n"],
-      ["\f", "\\f"],
-      ["\r", "\\r"],
-      ["'", "\\'"],
-      ['"', '\\"'],
-      ["\\", "\\\\"]
-    ]);
-    function escapeChar(char) {
-      return META_CHARS.get(char) || `\\u${`0000${char.charCodeAt(0).toString(16)}`.slice(-4)}`;
-    }
-    function quoteString(str2) {
-      return `'${str2.replace(ESCAPABLE, escapeChar)}'`;
-    }
-    exports2.quoteString = quoteString;
-    var RESERVED_WORDS = new Set("break else new var case finally return void catch for switch while continue function this with default if throw delete in try do instanceof typeof abstract enum int short boolean export interface static byte extends long super char final native synchronized class float package throws const goto private transient debugger implements protected volatile double import public let yield".split(" "));
-    exports2.IS_VALID_IDENTIFIER = /^[A-Za-z_$][A-Za-z0-9_$]*$/;
-    function isValidVariableName(name) {
-      return typeof name === "string" && !RESERVED_WORDS.has(name) && exports2.IS_VALID_IDENTIFIER.test(name);
-    }
-    exports2.isValidVariableName = isValidVariableName;
-    function quoteKey(key, next) {
-      return isValidVariableName(key) ? key : next(key);
-    }
-    exports2.quoteKey = quoteKey;
-    function stringifyPath(path8, next) {
-      let result = "";
-      for (const key of path8) {
-        if (isValidVariableName(key)) {
-          result += `.${key}`;
-        } else {
-          result += `[${next(key)}]`;
-        }
-      }
-      return result;
-    }
-    exports2.stringifyPath = stringifyPath;
-  }
-});
-
-// node_modules/javascript-stringify/dist/function.js
-var require_function2 = __commonJS({
-  "node_modules/javascript-stringify/dist/function.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.FunctionParser = exports2.dedentFunction = exports2.functionToString = exports2.USED_METHOD_KEY = void 0;
-    var quote_1 = require_quote();
-    var METHOD_NAMES_ARE_QUOTED = {
-      " "() {
-      }
-    }[" "].toString().charAt(0) === '"';
-    var FUNCTION_PREFIXES = {
-      Function: "function ",
-      GeneratorFunction: "function* ",
-      AsyncFunction: "async function ",
-      AsyncGeneratorFunction: "async function* "
-    };
-    var METHOD_PREFIXES = {
-      Function: "",
-      GeneratorFunction: "*",
-      AsyncFunction: "async ",
-      AsyncGeneratorFunction: "async *"
-    };
-    var TOKENS_PRECEDING_REGEXPS = new Set("case delete else in instanceof new return throw typeof void , ; : + - ! ~ & | ^ * / % < > ? =".split(" "));
-    exports2.USED_METHOD_KEY = /* @__PURE__ */ new WeakSet();
-    var functionToString = (fn, space, next, key) => {
-      const name = typeof key === "string" ? key : void 0;
-      if (name !== void 0)
-        exports2.USED_METHOD_KEY.add(fn);
-      return new FunctionParser(fn, space, next, name).stringify();
-    };
-    exports2.functionToString = functionToString;
-    function dedentFunction(fnString) {
-      let found;
-      for (const line of fnString.split("\n").slice(1)) {
-        const m = /^[\s\t]+/.exec(line);
-        if (!m)
-          return fnString;
-        const [str2] = m;
-        if (found === void 0)
-          found = str2;
-        else if (str2.length < found.length)
-          found = str2;
-      }
-      return found ? fnString.split(`
-${found}`).join("\n") : fnString;
-    }
-    exports2.dedentFunction = dedentFunction;
-    var FunctionParser = class {
-      constructor(fn, indent, next, key) {
-        this.fn = fn;
-        this.indent = indent;
-        this.next = next;
-        this.key = key;
-        this.pos = 0;
-        this.hadKeyword = false;
-        this.fnString = Function.prototype.toString.call(fn);
-        this.fnType = fn.constructor.name;
-        this.keyQuote = key === void 0 ? "" : quote_1.quoteKey(key, next);
-        this.keyPrefix = key === void 0 ? "" : `${this.keyQuote}:${indent ? " " : ""}`;
-        this.isMethodCandidate = key === void 0 ? false : this.fn.name === "" || this.fn.name === key;
-      }
-      stringify() {
-        const value = this.tryParse();
-        if (!value) {
-          return `${this.keyPrefix}void ${this.next(this.fnString)}`;
-        }
-        return dedentFunction(value);
-      }
-      getPrefix() {
-        if (this.isMethodCandidate && !this.hadKeyword) {
-          return METHOD_PREFIXES[this.fnType] + this.keyQuote;
-        }
-        return this.keyPrefix + FUNCTION_PREFIXES[this.fnType];
-      }
-      tryParse() {
-        if (this.fnString[this.fnString.length - 1] !== "}") {
-          return this.keyPrefix + this.fnString;
-        }
-        if (this.fn.name) {
-          const result = this.tryStrippingName();
-          if (result)
-            return result;
-        }
-        const prevPos = this.pos;
-        if (this.consumeSyntax() === "class")
-          return this.fnString;
-        this.pos = prevPos;
-        if (this.tryParsePrefixTokens()) {
-          const result = this.tryStrippingName();
-          if (result)
-            return result;
-          let offset = this.pos;
-          switch (this.consumeSyntax("WORD_LIKE")) {
-            case "WORD_LIKE":
-              if (this.isMethodCandidate && !this.hadKeyword) {
-                offset = this.pos;
-              }
-            case "()":
-              if (this.fnString.substr(this.pos, 2) === "=>") {
-                return this.keyPrefix + this.fnString;
-              }
-              this.pos = offset;
-            case '"':
-            case "'":
-            case "[]":
-              return this.getPrefix() + this.fnString.substr(this.pos);
-          }
-        }
-      }
-      /**
-       * Attempt to parse the function from the current position by first stripping
-       * the function's name from the front. This is not a fool-proof method on all
-       * JavaScript engines, but yields good results on Node.js 4 (and slightly
-       * less good results on Node.js 6 and 8).
-       */
-      tryStrippingName() {
-        if (METHOD_NAMES_ARE_QUOTED) {
-          return;
-        }
-        let start = this.pos;
-        const prefix = this.fnString.substr(this.pos, this.fn.name.length);
-        if (prefix === this.fn.name) {
-          this.pos += prefix.length;
-          if (this.consumeSyntax() === "()" && this.consumeSyntax() === "{}" && this.pos === this.fnString.length) {
-            if (this.isMethodCandidate || !quote_1.isValidVariableName(prefix)) {
-              start += prefix.length;
-            }
-            return this.getPrefix() + this.fnString.substr(start);
-          }
-        }
-        this.pos = start;
-      }
-      /**
-       * Attempt to advance the parser past the keywords expected to be at the
-       * start of this function's definition. This method sets `this.hadKeyword`
-       * based on whether or not a `function` keyword is consumed.
-       */
-      tryParsePrefixTokens() {
-        let posPrev = this.pos;
-        this.hadKeyword = false;
-        switch (this.fnType) {
-          case "AsyncFunction":
-            if (this.consumeSyntax() !== "async")
-              return false;
-            posPrev = this.pos;
-          case "Function":
-            if (this.consumeSyntax() === "function") {
-              this.hadKeyword = true;
-            } else {
-              this.pos = posPrev;
-            }
-            return true;
-          case "AsyncGeneratorFunction":
-            if (this.consumeSyntax() !== "async")
-              return false;
-          case "GeneratorFunction":
-            let token = this.consumeSyntax();
-            if (token === "function") {
-              token = this.consumeSyntax();
-              this.hadKeyword = true;
-            }
-            return token === "*";
-        }
-      }
-      /**
-       * Advance the parser past one element of JavaScript syntax. This could be a
-       * matched pair of delimiters, like braces or parentheses, or an atomic unit
-       * like a keyword, variable, or operator. Return a normalized string
-       * representation of the element parsed--for example, returns '{}' for a
-       * matched pair of braces. Comments and whitespace are skipped.
-       *
-       * (This isn't a full parser, so the token scanning logic used here is as
-       * simple as it can be. As a consequence, some things that are one token in
-       * JavaScript, like decimal number literals or most multi-character operators
-       * like '&&', are split into more than one token here. However, awareness of
-       * some multi-character sequences like '=>' is necessary, so we match the few
-       * of them that we care about.)
-       */
-      consumeSyntax(wordLikeToken) {
-        const m = this.consumeMatch(/^(?:([A-Za-z_0-9$\xA0-\uFFFF]+)|=>|\+\+|\-\-|.)/);
-        if (!m)
-          return;
-        const [token, match] = m;
-        this.consumeWhitespace();
-        if (match)
-          return wordLikeToken || match;
-        switch (token) {
-          case "(":
-            return this.consumeSyntaxUntil("(", ")");
-          case "[":
-            return this.consumeSyntaxUntil("[", "]");
-          case "{":
-            return this.consumeSyntaxUntil("{", "}");
-          case "`":
-            return this.consumeTemplate();
-          case '"':
-            return this.consumeRegExp(/^(?:[^\\"]|\\.)*"/, '"');
-          case "'":
-            return this.consumeRegExp(/^(?:[^\\']|\\.)*'/, "'");
-        }
-        return token;
-      }
-      consumeSyntaxUntil(startToken, endToken) {
-        let isRegExpAllowed = true;
-        for (; ; ) {
-          const token = this.consumeSyntax();
-          if (token === endToken)
-            return startToken + endToken;
-          if (!token || token === ")" || token === "]" || token === "}")
-            return;
-          if (token === "/" && isRegExpAllowed && this.consumeMatch(/^(?:\\.|[^\\\/\n[]|\[(?:\\.|[^\]])*\])+\/[a-z]*/)) {
-            isRegExpAllowed = false;
-            this.consumeWhitespace();
-          } else {
-            isRegExpAllowed = TOKENS_PRECEDING_REGEXPS.has(token);
-          }
-        }
-      }
-      consumeMatch(re) {
-        const m = re.exec(this.fnString.substr(this.pos));
-        if (m)
-          this.pos += m[0].length;
-        return m;
-      }
-      /**
-       * Advance the parser past an arbitrary regular expression. Return `token`,
-       * or the match object of the regexp.
-       */
-      consumeRegExp(re, token) {
-        const m = re.exec(this.fnString.substr(this.pos));
-        if (!m)
-          return;
-        this.pos += m[0].length;
-        this.consumeWhitespace();
-        return token;
-      }
-      /**
-       * Advance the parser past a template string.
-       */
-      consumeTemplate() {
-        for (; ; ) {
-          this.consumeMatch(/^(?:[^`$\\]|\\.|\$(?!{))*/);
-          if (this.fnString[this.pos] === "`") {
-            this.pos++;
-            this.consumeWhitespace();
-            return "`";
-          }
-          if (this.fnString.substr(this.pos, 2) === "${") {
-            this.pos += 2;
-            this.consumeWhitespace();
-            if (this.consumeSyntaxUntil("{", "}"))
-              continue;
-          }
-          return;
-        }
-      }
-      /**
-       * Advance the parser past any whitespace or comments.
-       */
-      consumeWhitespace() {
-        this.consumeMatch(/^(?:\s|\/\/.*|\/\*[^]*?\*\/)*/);
-      }
-    };
-    exports2.FunctionParser = FunctionParser;
-  }
-});
-
-// node_modules/javascript-stringify/dist/array.js
-var require_array2 = __commonJS({
-  "node_modules/javascript-stringify/dist/array.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.arrayToString = void 0;
-    var arrayToString = (array, space, next) => {
-      const values = array.map(function(value, index) {
-        const result = next(value, index);
-        if (result === void 0)
-          return String(result);
-        return space + result.split("\n").join(`
-${space}`);
-      }).join(space ? ",\n" : ",");
-      const eol = space && values ? "\n" : "";
-      return `[${eol}${values}${eol}]`;
-    };
-    exports2.arrayToString = arrayToString;
-  }
-});
-
-// node_modules/javascript-stringify/dist/object.js
-var require_object = __commonJS({
-  "node_modules/javascript-stringify/dist/object.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.objectToString = void 0;
-    var quote_1 = require_quote();
-    var function_1 = require_function2();
-    var array_1 = require_array2();
-    var objectToString = (value, space, next, key) => {
-      if (typeof Buffer === "function" && Buffer.isBuffer(value)) {
-        return `Buffer.from(${next(value.toString("base64"))}, 'base64')`;
-      }
-      if (typeof global === "object" && value === global) {
-        return globalToString(value, space, next, key);
-      }
-      const toString = OBJECT_TYPES[Object.prototype.toString.call(value)];
-      return toString ? toString(value, space, next, key) : void 0;
-    };
-    exports2.objectToString = objectToString;
-    var rawObjectToString = (obj, indent, next, key) => {
-      const eol = indent ? "\n" : "";
-      const space = indent ? " " : "";
-      const values = Object.keys(obj).reduce(function(values2, key2) {
-        const fn = obj[key2];
-        const result = next(fn, key2);
-        if (result === void 0)
-          return values2;
-        const value = result.split("\n").join(`
-${indent}`);
-        if (function_1.USED_METHOD_KEY.has(fn)) {
-          values2.push(`${indent}${value}`);
-          return values2;
-        }
-        values2.push(`${indent}${quote_1.quoteKey(key2, next)}:${space}${value}`);
-        return values2;
-      }, []).join(`,${eol}`);
-      if (values === "")
-        return "{}";
-      return `{${eol}${values}${eol}}`;
-    };
-    var globalToString = (value, space, next) => {
-      return `Function(${next("return this")})()`;
-    };
-    var OBJECT_TYPES = {
-      "[object Array]": array_1.arrayToString,
-      "[object Object]": rawObjectToString,
-      "[object Error]": (error, space, next) => {
-        return `new Error(${next(error.message)})`;
-      },
-      "[object Date]": (date) => {
-        return `new Date(${date.getTime()})`;
-      },
-      "[object String]": (str2, space, next) => {
-        return `new String(${next(str2.toString())})`;
-      },
-      "[object Number]": (num) => {
-        return `new Number(${num})`;
-      },
-      "[object Boolean]": (bool) => {
-        return `new Boolean(${bool})`;
-      },
-      "[object Set]": (set, space, next) => {
-        return `new Set(${next(Array.from(set))})`;
-      },
-      "[object Map]": (map, space, next) => {
-        return `new Map(${next(Array.from(map))})`;
-      },
-      "[object RegExp]": String,
-      "[object global]": globalToString,
-      "[object Window]": globalToString
-    };
-  }
-});
-
-// node_modules/javascript-stringify/dist/stringify.js
-var require_stringify3 = __commonJS({
-  "node_modules/javascript-stringify/dist/stringify.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.toString = void 0;
-    var quote_1 = require_quote();
-    var object_1 = require_object();
-    var function_1 = require_function2();
-    var PRIMITIVE_TYPES = {
-      string: quote_1.quoteString,
-      number: (value) => Object.is(value, -0) ? "-0" : String(value),
-      boolean: String,
-      symbol: (value, space, next) => {
-        const key = Symbol.keyFor(value);
-        if (key !== void 0)
-          return `Symbol.for(${next(key)})`;
-        return `Symbol(${next(value.description)})`;
-      },
-      bigint: (value, space, next) => {
-        return `BigInt(${next(String(value))})`;
-      },
-      undefined: String,
-      object: object_1.objectToString,
-      function: function_1.functionToString
-    };
-    var toString = (value, space, next, key) => {
-      if (value === null)
-        return "null";
-      return PRIMITIVE_TYPES[typeof value](value, space, next, key);
-    };
-    exports2.toString = toString;
-  }
-});
-
-// node_modules/javascript-stringify/dist/index.js
-var require_dist = __commonJS({
-  "node_modules/javascript-stringify/dist/index.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.stringify = void 0;
-    var stringify_1 = require_stringify3();
-    var quote_1 = require_quote();
-    var ROOT_SENTINEL = Symbol("root");
-    function stringify2(value, replacer, indent, options2 = {}) {
-      const space = typeof indent === "string" ? indent : " ".repeat(indent || 0);
-      const path8 = [];
-      const stack = /* @__PURE__ */ new Set();
-      const tracking = /* @__PURE__ */ new Map();
-      const unpack = /* @__PURE__ */ new Map();
-      let valueCount = 0;
-      const { maxDepth = 100, references = false, skipUndefinedProperties = false, maxValues = 1e5 } = options2;
-      const valueToString = replacerToString(replacer);
-      const onNext = (value2, key) => {
-        if (++valueCount > maxValues)
-          return;
-        if (skipUndefinedProperties && value2 === void 0)
-          return;
-        if (path8.length > maxDepth)
-          return;
-        if (key === void 0)
-          return valueToString(value2, space, onNext, key);
-        path8.push(key);
-        const result2 = builder(value2, key === ROOT_SENTINEL ? void 0 : key);
-        path8.pop();
-        return result2;
-      };
-      const builder = references ? (value2, key) => {
-        if (value2 !== null && (typeof value2 === "object" || typeof value2 === "function" || typeof value2 === "symbol")) {
-          if (tracking.has(value2)) {
-            unpack.set(path8.slice(1), tracking.get(value2));
-            return valueToString(void 0, space, onNext, key);
-          }
-          tracking.set(value2, path8.slice(1));
-        }
-        return valueToString(value2, space, onNext, key);
-      } : (value2, key) => {
-        if (stack.has(value2))
-          return;
-        stack.add(value2);
-        const result2 = valueToString(value2, space, onNext, key);
-        stack.delete(value2);
-        return result2;
-      };
-      const result = onNext(value, ROOT_SENTINEL);
-      if (unpack.size) {
-        const sp = space ? " " : "";
-        const eol = space ? "\n" : "";
-        let wrapper = `var x${sp}=${sp}${result};${eol}`;
-        for (const [key, value2] of unpack.entries()) {
-          const keyPath = quote_1.stringifyPath(key, onNext);
-          const valuePath = quote_1.stringifyPath(value2, onNext);
-          wrapper += `x${keyPath}${sp}=${sp}x${valuePath};${eol}`;
-        }
-        return `(function${sp}()${sp}{${eol}${wrapper}return x;${eol}}())`;
-      }
-      return result;
-    }
-    exports2.stringify = stringify2;
-    function replacerToString(replacer) {
-      if (!replacer)
-        return stringify_1.toString;
-      return (value, space, next, key) => {
-        return replacer(value, space, (value2) => stringify_1.toString(value2, space, next, key), key);
-      };
-    }
   }
 });
 
@@ -13524,8 +13002,8 @@ async function getFileLastModifyTimeByFs(url) {
     return void 0;
   }
 }
-function joinPath(base, path8) {
-  return `${base}${path8}`.replace(/\/+/g, "/");
+function joinPath(base, path7) {
+  return `${base}${path7}`.replace(/\/+/g, "/");
 }
 var grayMatter = import_gray_matter.default;
 function getTextSummary(text, count = 100) {
@@ -13716,17 +13194,16 @@ function checkConfig(cfg) {
 }
 
 // src/utils/node/vitePlugins.ts
-var import_node_path6 = __toESM(require("path"));
-var import_node_fs5 = require("fs");
-var import_node_buffer2 = require("buffer");
-
-// node_modules/vitepress-plugin-pagefind/dist/index.mjs
+var import_node_path5 = __toESM(require("path"));
+var import_node_fs4 = require("fs");
 var import_node_buffer = require("buffer");
-var import_node_path5 = __toESM(require("path"), 1);
-var import_node_url = require("url");
-var import_node_fs4 = __toESM(require("fs"), 1);
-var import_node_process4 = __toESM(require("process"), 1);
-var import_javascript_stringify = __toESM(require_dist(), 1);
+
+// node_modules/vitepress-plugin-rss/dist/index.mjs
+var import_fs = __toESM(require("fs"), 1);
+var import_path = __toESM(require("path"), 1);
+var import_process = __toESM(require("process"), 1);
+var import_fast_glob2 = __toESM(require_out4(), 1);
+var import_feed = __toESM(require_feed(), 1);
 
 // node_modules/@sugarat/theme-shared/dist/index.mjs
 var import_node_fs3 = __toESM(require("fs"), 1);
@@ -13887,13 +13364,6 @@ async function getFileLastModifyTimeByFs2(url) {
     return void 0;
   }
 }
-var EXTERNAL_URL_RE = /^[a-z]+:/i;
-function joinPath2(base, path22) {
-  return `${base}${path22}`.replace(/\/+/g, "/");
-}
-function withBase(base, path22) {
-  return EXTERNAL_URL_RE.test(path22) || path22.startsWith(".") ? path22 : joinPath2(base, path22);
-}
 var grayMatter2 = import_gray_matter2.default;
 function getTextSummary2(text, count = 100) {
   return text?.replace(/^#+\s+.*/, "")?.replace(/#/g, "")?.replace(/!\[.*?\]\(.*?\)/g, "")?.replace(/\[(.*?)\]\(.*?\)/g, "$1")?.replace(/\*\*(.*?)\*\*/g, "$1")?.split("\n")?.filter((v) => !!v)?.join("\n")?.replace(/>(.*)/, "")?.replace(/</g, "&lt;").replace(/>/g, "&gt;")?.trim()?.slice(0, count);
@@ -13942,183 +13412,7 @@ function formatDate2(d, fmt = "yyyy-MM-dd hh:mm:ss") {
   return fmt;
 }
 
-// node_modules/vitepress-plugin-pagefind/dist/index.mjs
-var import_node_child_process = require("child_process");
-var import_meta2 = {};
-var ignoreSelectors = [
-  // 侧边栏内容
-  "div.aside",
-  // 标题锚点
-  "a.header-anchor"
-];
-async function buildEnd(pagefindOps, siteConfig) {
-  const ignore = [
-    ...new Set(ignoreSelectors.concat(pagefindOps?.excludeSelector || []))
-  ];
-  const { log } = console;
-  log();
-  log("=== pagefind: https://pagefind.app/ ===");
-  let command = `npx pagefind --site "${siteConfig.outDir}"`;
-  if (ignore.length) {
-    command += ` --exclude-selectors "${ignore.join(", ")}"`;
-  }
-  if (typeof pagefindOps.forceLanguage === "string") {
-    command += ` --force-language ${pagefindOps.forceLanguage}`;
-  }
-  if (pagefindOps.indexingCommand) {
-    command = pagefindOps.indexingCommand;
-  }
-  log(command);
-  log();
-  (0, import_node_child_process.execSync)(command, {
-    stdio: "inherit"
-  });
-}
-function getPagefindHead(base) {
-  return [
-    [
-      "script",
-      {},
-      `import('${withBase(base || "", "/pagefind/pagefind.js")}')
-  .then((module) => {
-    window.__pagefind__ = module
-    module.init()
-  })
-  .catch(() => {
-    // console.log('not load /pagefind/pagefind.js')
-  })`
-    ]
-  ];
-}
-function isESM() {
-  return typeof __filename === "undefined" || typeof __dirname === "undefined";
-}
-function getDirname() {
-  return isESM() ? import_node_path5.default.dirname((0, import_node_url.fileURLToPath)(import_meta2.url)) : __dirname;
-}
-var aliasSearchVueFile = `${getDirname()}/../src/Search.vue`;
-function meta2string(frontmatter) {
-  return `base64:${import_node_buffer.Buffer.from(encodeURIComponent(JSON.stringify(frontmatter))).toString("base64")}`;
-}
-function pagefindPlugin(searchConfig = {}) {
-  const virtualModuleId = "virtual:pagefind";
-  const resolvedVirtualModuleId = `\0${virtualModuleId}`;
-  let resolveConfig;
-  let vitepressConfig;
-  let dynamicRoutes;
-  const pluginOps = {
-    name: "vitepress-plugin-pagefind",
-    config: () => {
-      return {
-        resolve: {
-          alias: {
-            "./VPNavBarSearch.vue": aliasSearchVueFile
-          }
-        }
-      };
-    },
-    configResolved(config) {
-      if (searchConfig.manual) {
-        return;
-      }
-      if (resolveConfig) {
-        return;
-      }
-      resolveConfig = config;
-      vitepressConfig = config.vitepress;
-      dynamicRoutes = vitepressConfig.dynamicRoutes;
-      if (!vitepressConfig) {
-        return;
-      }
-      const selfBuildEnd = vitepressConfig.buildEnd;
-      vitepressConfig.buildEnd = async (siteConfig) => {
-        await selfBuildEnd?.(siteConfig);
-        await buildEnd(searchConfig, siteConfig);
-        const okMark2 = "\x1B[32m\u2713\x1B[0m";
-        console.log(`${okMark2} generating pagefind Indexing...`);
-      };
-      const selfTransformHead = vitepressConfig.transformHead;
-      vitepressConfig.transformHead = async (ctx) => {
-        const selfHead = await Promise.resolve(selfTransformHead?.(ctx)) || [];
-        return selfHead.concat(getPagefindHead(ctx.siteData.base));
-      };
-    },
-    resolveId(id) {
-      if (id === virtualModuleId) {
-        return resolvedVirtualModuleId;
-      }
-    },
-    load(id) {
-      if (id !== resolvedVirtualModuleId)
-        return;
-      return `
-      import { ref } from 'vue'
-      export const searchConfig = ${(0, import_javascript_stringify.stringify)(searchConfig)}
-      `;
-    },
-    // 添加检索的内容标识
-    async transform(code, id, options2) {
-      if (!id.includes(".md")) {
-        return code;
-      }
-      let { searchParams, pathname, protocol } = new URL(id, "file:");
-      pathname = decodeURIComponent(pathname);
-      if (!pathname.endsWith(".md")) {
-        return code;
-      }
-      const isWindows3 = import_node_process4.default.platform === "win32";
-      const fullPath = isWindows3 ? `${protocol}${pathname}` : pathname;
-      const dynamicRoute = dynamicRoutes.routes.find((route) => fullPath.toLowerCase() === route.fullPath.toLowerCase());
-      const isDynamicRoute = !!dynamicRoute;
-      const filepath = isDynamicRoute ? joinPath2(vitepressConfig.srcDir, `/${dynamicRoute.route}`) : pathname;
-      const isExist = import_node_fs4.default.existsSync(filepath);
-      if (!isExist) {
-        this.warn(`${id}: not parse ${filepath} please contact the author for assistance`);
-        return code;
-      }
-      if (!searchParams.size || searchParams.has("lang.ts")) {
-        const fileContent = await import_node_fs4.default.promises.readFile(filepath, "utf-8");
-        const { data: frontmatter, content } = grayMatter2(fileContent, {
-          excerpt: true
-        });
-        if (!content.trim()) {
-          return code;
-        }
-        if (frontmatter["pagefind-indexed"] === false) {
-          return code;
-        }
-        const attrs = {
-          "data-pagefind-body": true
-        };
-        if (!searchConfig.manual) {
-          frontmatter.date = +new Date(frontmatter.date || await getFileLastModifyTime2(id));
-          if (typeof searchConfig.filter === "function") {
-            attrs["data-pagefind-meta"] = meta2string(frontmatter);
-          }
-        }
-        if (!code.includes(options2?.ssr ? "_push(`" : '_createElementBlock("div", null')) {
-          if (!code.includes(`${id}?vue&type=script&setup=true&lang.ts`)) {
-            this.warn(`${options2?.ssr ? "SSR" : "Client"} ${id} may not be a valid file, will not be indexed, please contact the author for assistance`);
-          }
-          return code;
-        }
-        if (options2?.ssr) {
-          return code.replace("_push(`", `Object.assign(_attrs, ${(0, import_javascript_stringify.stringify)(attrs)});_push(\``);
-        }
-        return code.replace('_createElementBlock("div", null', `_createElementBlock("div", ${(0, import_javascript_stringify.stringify)(attrs)}`);
-      }
-      return code;
-    }
-  };
-  return pluginOps;
-}
-
 // node_modules/vitepress-plugin-rss/dist/index.mjs
-var import_fs = __toESM(require("fs"), 1);
-var import_path = __toESM(require("path"), 1);
-var import_process = __toESM(require("process"), 1);
-var import_fast_glob2 = __toESM(require_out4(), 1);
-var import_feed = __toESM(require_feed(), 1);
 var __defProp3 = Object.defineProperty;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __hasOwnProp3 = Object.prototype.hasOwnProperty;
@@ -14353,26 +13647,26 @@ function themeReloadPlugin() {
       const restart = debounce(() => {
         server.restart();
       }, 500);
-      server.watcher.on("add", async (path8) => {
-        const route = generateRoute(path8);
-        const meta = await getArticleMeta(path8, route, blogConfig?.timeZone);
+      server.watcher.on("add", async (path7) => {
+        const route = generateRoute(path7);
+        const meta = await getArticleMeta(path7, route, blogConfig?.timeZone);
         blogConfig.pagesData.push({
           route,
           meta
         });
         restart();
       });
-      server.watcher.on("change", async (path8) => {
-        const route = generateRoute(path8);
-        const meta = await getArticleMeta(path8, route, blogConfig?.timeZone);
+      server.watcher.on("change", async (path7) => {
+        const route = generateRoute(path7);
+        const meta = await getArticleMeta(path7, route, blogConfig?.timeZone);
         const matched = blogConfig.pagesData.find((v) => v.route === route);
         if (matched && !isEqual(matched.meta, meta, ["date", "description"])) {
           matched.meta = meta;
           restart();
         }
       });
-      server.watcher.on("unlink", (path8) => {
-        const route = generateRoute(path8);
+      server.watcher.on("unlink", (path7) => {
+        const route = generateRoute(path7);
         const idx = blogConfig.pagesData.findIndex((v) => v.route === route);
         if (idx >= 0) {
           blogConfig.pagesData.splice(idx, 1);
@@ -14397,14 +13691,6 @@ function getVitePlugins(cfg = {}) {
   }
   plugins.push(themeReloadPlugin());
   plugins.push(providePageData(cfg));
-  if (cfg && cfg.search !== false) {
-    const ops = cfg.search instanceof Object ? cfg.search : {};
-    plugins.push(
-      pagefindPlugin({
-        ...ops
-      })
-    );
-  }
   if (cfg?.RSS) {
     ;
     [cfg?.RSS].flat().forEach((rssConfig) => plugins.push(RssPlugin(rssConfig)));
@@ -14441,12 +13727,12 @@ function coverImgTransform() {
           continue;
         }
         try {
-          const realPath = import_node_path6.default.join(vitepressConfig.root, cover);
-          if (!(0, import_node_fs5.existsSync)(realPath)) {
+          const realPath = import_node_path5.default.join(vitepressConfig.root, cover);
+          if (!(0, import_node_fs4.existsSync)(realPath)) {
             continue;
           }
-          const fileBuffer = (0, import_node_fs5.readFileSync)(realPath);
-          const matchAsset = assetsMap.find((v) => import_node_buffer2.Buffer.compare(fileBuffer, v.source) === 0);
+          const fileBuffer = (0, import_node_fs4.readFileSync)(realPath);
+          const matchAsset = assetsMap.find((v) => import_node_buffer.Buffer.compare(fileBuffer, v.source) === 0);
           if (matchAsset) {
             page.meta.cover = joinPath("/", matchAsset.fileName);
           }

@@ -1,4 +1,4 @@
-/// <reference types=".vue-global-types/vue_3.4_false.d.ts" />
+/// <reference types=".vue-global-types/vue_3.5_false.d.ts" />
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useData } from 'vitepress';
 import { useBlogConfig } from '../composables/config/blog';

@@ -4,7 +4,6 @@ import { RSSOptions } from 'vitepress-plugin-rss';
 import { Repo, Mapping } from '@giscus/vue';
 import { Options } from 'oh-my-live2d';
 import { Ref } from 'vue';
-import { PagefindConfig } from 'vitepress-plugin-pagefind';
 export { tabsMarkdownPlugin } from 'vitepress-plugin-tabs';
 
 type RSSPluginOptions = RSSOptions;
@@ -188,7 +187,6 @@ declare namespace Theme {
         inspiringTimeout?: number;
         pageSize?: number;
         author?: string | boolean;
-        authorImgUrl?: string;
         logo?: string | boolean;
         /**
          * @default 'card'
@@ -372,7 +370,6 @@ declare namespace Theme {
         tags?: string[];
         top?: number;
     }
-    type SearchConfig = false | PagefindConfig;
     interface UserWorks {
         title: string;
         description?: string;
@@ -395,6 +392,7 @@ declare namespace Theme {
         pagesData: PageData[];
         srcDir?: string;
         author?: string;
+        authorImgUrl?: string;
         hotArticle?: HotArticle | false;
         home?: HomeBlog;
         /**
@@ -402,8 +400,9 @@ declare namespace Theme {
          * 内置pagefind 实现，
          * VitePress 官方提供 minisearch 实现，
          * 社区提供 flexsearch 实现
+         * todo(@rx-ted): will fix it
          */
-        search?: SearchConfig;
+        search?: false;
         /**
          * 配置评论
          * giscus: https://giscus.app/zh-CN

@@ -1,4 +1,4 @@
-/// <reference types=".vue-global-types/vue_3.4_false.d.ts" />
+/// <reference types=".vue-global-types/vue_3.5_false.d.ts" />
 import { ElImageViewer } from 'element-plus';
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
 const { defineProps, defineSlots, defineEmits, defineExpose, defineModel, defineOptions, withDefaults, } = await import('vue');

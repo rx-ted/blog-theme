@@ -1,4 +1,4 @@
-/// <reference types=".vue-global-types/vue_3.4_false.d.ts" />
+/// <reference types=".vue-global-types/vue_3.5_false.d.ts" />
 import { computed } from 'vue';
 import { useBlogConfig } from '../composables/config/blog';
 import BlogRecommendArticle from './BlogRecommendArticle.vue';

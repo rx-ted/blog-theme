@@ -1,4 +1,4 @@
-/// <reference types=".vue-global-types/vue_3.4_false.d.ts" />
+/// <reference types=".vue-global-types/vue_3.5_false.d.ts" />
 import { useRouter, withBase } from 'vitepress';
 import { computed } from 'vue';
 import { wrapperCleanUrls } from '../utils/client';
@@ -151,12 +151,12 @@ const __VLS_internalComponent = (await import('vue')).defineComponent({
             resultCover: resultCover,
         };
     },
-    props: {},
+    __typeProps: {},
 });
 export default (await import('vue')).defineComponent({
     setup() {
         return {};
     },
-    props: {},
+    __typeProps: {},
 });
 ;

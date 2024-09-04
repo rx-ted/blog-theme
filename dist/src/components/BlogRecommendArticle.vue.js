@@ -1,4 +1,4 @@
-/// <reference types=".vue-global-types/vue_3.4_false.d.ts" />
+/// <reference types=".vue-global-types/vue_3.5_false.d.ts" />
 import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter, withBase } from 'vitepress';
 import { ElButton } from 'element-plus';

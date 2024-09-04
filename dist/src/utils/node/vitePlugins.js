@@ -1,7 +1,6 @@
 import path from 'node:path';
 import { existsSync, readFileSync } from 'node:fs';
 import { Buffer } from 'node:buffer';
-import { pagefindPlugin } from 'vitepress-plugin-pagefind';
 import { RssPlugin } from 'vitepress-plugin-rss';
 import { joinPath } from '../../shared/index';
 import { themeReloadPlugin } from './hot-reload-plugin';
@@ -18,13 +17,6 @@ export function getVitePlugins(cfg = {}) {
     plugins.push(themeReloadPlugin());
     // 主题pageData生成
     plugins.push(providePageData(cfg));
-    // 内置简化版的pagefind
-    if (cfg && cfg.search !== false) {
-        const ops = cfg.search instanceof Object ? cfg.search : {};
-        plugins.push(pagefindPlugin({
-            ...ops,
-        }));
-    }
     // 内置支持RSS
     if (cfg?.RSS) {
         ;

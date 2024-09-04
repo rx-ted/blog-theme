@@ -1,4 +1,4 @@
-/// <reference types=".vue-global-types/vue_3.4_false.d.ts" />
+/// <reference types=".vue-global-types/vue_3.5_false.d.ts" />
 import { ElCarousel, ElCarouselItem, ElImage, ElMessage } from 'element-plus';
 // import VPDocAsideOutline from 'vitepress/dist/client/theme-default/components/VPDocAsideOutline.vue'
 import { computed, reactive, ref, watch, watchEffect } from 'vue';

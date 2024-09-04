@@ -1,4 +1,4 @@
-/// <reference types=".vue-global-types/vue_3.4_false.d.ts" />
+/// <reference types=".vue-global-types/vue_3.5_false.d.ts" />
 import { useElementSize, useScroll } from '@vueuse/core';
 import { ElIcon } from 'element-plus';
 import { computed, ref } from 'vue';

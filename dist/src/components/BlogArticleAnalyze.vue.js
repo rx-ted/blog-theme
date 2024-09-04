@@ -1,4 +1,4 @@
-/// <reference types=".vue-global-types/vue_3.4_false.d.ts" />
+/// <reference types=".vue-global-types/vue_3.5_false.d.ts" />
 // 阅读时间计算方式参考
 // https://zhuanlan.zhihu.com/p/36375802
 import { useData } from 'vitepress';

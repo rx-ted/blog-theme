@@ -1,4 +1,4 @@
-/// <reference types=".vue-global-types/vue_3.4_false.d.ts" />
+/// <reference types=".vue-global-types/vue_3.5_false.d.ts" />
 import { useElementSize, useElementVisibility, useWindowSize } from '@vueuse/core';
 import { useData } from 'vitepress';
 import { computed, h, ref } from 'vue';

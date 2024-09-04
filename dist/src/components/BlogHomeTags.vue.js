@@ -1,4 +1,4 @@
-/// <reference types=".vue-global-types/vue_3.4_false.d.ts" />
+/// <reference types=".vue-global-types/vue_3.5_false.d.ts" />
 import { computed, watch } from 'vue';
 import { ElTag } from 'element-plus';
 import { useBrowserLocation, useDark, useUrlSearchParams } from '@vueuse/core';

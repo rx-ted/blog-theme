@@ -1,4 +1,4 @@
-/// <reference types=".vue-global-types/vue_3.4_false.d.ts" />
+/// <reference types=".vue-global-types/vue_3.5_false.d.ts" />
 import { useData, useRoute } from 'vitepress';
 import { computed, nextTick, ref, watch } from 'vue';
 import Giscus from '@giscus/vue';
