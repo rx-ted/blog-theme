@@ -1,6 +1,6 @@
 {
   "name": "@rx-ted/theme",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "blog theme",
   "main": "src/index.ts",
   "scripts": {
